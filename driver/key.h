@@ -22,9 +22,9 @@
 #define SWITCH_4_PORT		GPIOA
 #define SWITCH_4_PIN		GPIO_Pin_8
 
-#define SWITCH_5_RCC		RCC_APB2Periph_GPIOA
-#define SWITCH_5_PORT		GPIOA
-#define SWITCH_5_PIN		GPIO_Pin_12
+#define SWITCH_5_RCC		RCC_APB2Periph_GPIOB
+#define SWITCH_5_PORT		GPIOB
+#define SWITCH_5_PIN		GPIO_Pin_6
 
 #define SWITCH_6_RCC		RCC_APB2Periph_GPIOB
 #define SWITCH_6_PORT		GPIOB
