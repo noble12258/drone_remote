@@ -93,7 +93,7 @@ void RgbLedBlinkFast(LedColor ledColor)
 	}
 }
 
-void RgbLedBlinkSlow(LedColor ledColor)
+void RgbLedBlinkSlow(const LedColor ledColor)
 {
 	static uint8_t blinkCount = 0;
 
