@@ -7,7 +7,7 @@ void PowerControlGpioInit(void)
 
 	GPIO_InitStructure.GPIO_Mode = GPIO_Mode_IPD;
 	GPIO_InitStructure.GPIO_Speed = GPIO_Speed_10MHz;
-	GPIO_InitStructure.GPIO_Pin = GPIO_Mode_IPU;
+	GPIO_InitStructure.GPIO_Pin = VCC_DETECT_IN_PIN;
 	GPIO_Init(VCC_DETECT_IN_PORT, &GPIO_InitStructure); 
 	
 	GPIO_InitStructure.GPIO_Mode = GPIO_Mode_Out_PP;

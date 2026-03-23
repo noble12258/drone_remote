@@ -4,7 +4,7 @@
 #include "stm32f10x.h"
 
 #define BEEP_RCC_PORT		RCC_APB2Periph_GPIOA
-#define BEEP_PIN				GPIO_Pin_8
+#define BEEP_PIN				GPIO_Pin_11
 #define BEEP_PORT				GPIOA
 
 void BeepInit(void);

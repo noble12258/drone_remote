@@ -8,37 +8,30 @@
 #define DEBUG_LEVEL	DEBUG_LOG
 #include "log_lib.h"
 
-static uint16_t dmaAdcAddr[6] = {0};
+static uint16_t dmaAdcAddr[5] = {0};
 static volatile AdcValue adcValue = {0};
 
 /* 端口配置初始化 */
 void AdcGpioInit(void)
 {
-	GPIO_InitTypeDef GPIO_initStructure;    
-	
-	//左遥感ADC配置
+	GPIO_InitTypeDef GPIO_initStructure;
+
+	//左遥感ADC配置 PA0/PA1
 	RCC_APB2PeriphClockCmd(RCC_APB2Periph_GPIOA ,ENABLE);
-	GPIO_initStructure.GPIO_Pin = GPIO_Pin_0 | GPIO_Pin_1;	    
-	GPIO_initStructure.GPIO_Mode = GPIO_Mode_AIN;								    
-	GPIO_Init(GPIOA,&GPIO_initStructure);	
-	
-	//右遥感ADC配置
-	RCC_APB2PeriphClockCmd(RCC_APB2Periph_GPIOB ,ENABLE);
-	GPIO_initStructure.GPIO_Pin = GPIO_Pin_0 | GPIO_Pin_1;	    
-	GPIO_initStructure.GPIO_Mode = GPIO_Mode_AIN;								    
-	GPIO_Init(GPIOB,&GPIO_initStructure);	
-	
-	//电池电压检测ADC配置
-	RCC_APB2PeriphClockCmd(RCC_APB2Periph_GPIOA,ENABLE);
-	GPIO_initStructure.GPIO_Pin = GPIO_Pin_2;	    
-	GPIO_initStructure.GPIO_Mode = GPIO_Mode_AIN;								    
-	GPIO_Init(GPIOA,&GPIO_initStructure);	
-	
-	//电池电压检测ADC配置
-	RCC_APB2PeriphClockCmd(RCC_APB2Periph_GPIOA,ENABLE);
-	GPIO_initStructure.GPIO_Pin = GPIO_Pin_3;	    
-	GPIO_initStructure.GPIO_Mode = GPIO_Mode_AIN;								    
-	GPIO_Init(GPIOA,&GPIO_initStructure);	
+	GPIO_initStructure.GPIO_Pin = GPIO_Pin_0 | GPIO_Pin_1;
+	GPIO_initStructure.GPIO_Mode = GPIO_Mode_AIN;
+	GPIO_Init(GPIOA,&GPIO_initStructure);
+
+	//右遥感ADC配置 PA2/PA3
+	GPIO_initStructure.GPIO_Pin = GPIO_Pin_2 | GPIO_Pin_3;
+	GPIO_initStructure.GPIO_Mode = GPIO_Mode_AIN;
+	GPIO_Init(GPIOA,&GPIO_initStructure);
+
+	//电池电压检测ADC配置 PB1
+	RCC_APB2PeriphClockCmd(RCC_APB2Periph_GPIOB,ENABLE);
+	GPIO_initStructure.GPIO_Pin = GPIO_Pin_1;
+	GPIO_initStructure.GPIO_Mode = GPIO_Mode_AIN;
+	GPIO_Init(GPIOB,&GPIO_initStructure);
 }
 
 //遥感数据采集
@@ -53,25 +46,23 @@ static void AdcConfig(void)
 	ADC_initStructure.ADC_DataAlign = ADC_DataAlign_Right;		                //数据右对齐				
 	ADC_initStructure.ADC_ExternalTrigConv = ADC_ExternalTrigConv_T4_CC4;	    //外部定时器4通道4定时触发	
 	ADC_initStructure.ADC_Mode = ADC_Mode_Independent;							
-	ADC_initStructure.ADC_NbrOfChannel = 6;										
-	ADC_initStructure.ADC_ScanConvMode = ENABLE;		                        //扫描模式						
+	ADC_initStructure.ADC_NbrOfChannel = 5;
+	ADC_initStructure.ADC_ScanConvMode = ENABLE;		                        //扫描模式
 	ADC_Init(ADC1,&ADC_initStructure);
 
 	ADC_Cmd(ADC1,ENABLE);
-    
+
 	ADC_DMACmd(ADC1,ENABLE);
-	
-	RCC_ADCCLKConfig(RCC_PCLK2_Div8);		//ADC时钟分频											
-                                                                                
-	ADC_RegularChannelConfig(ADC1,ADC_Channel_0,1,ADC_SampleTime_71Cycles5);	//左摇杆通道配置，采样时间设置
+
+	RCC_ADCCLKConfig(RCC_PCLK2_Div8);		//ADC时钟分频
+
+	ADC_RegularChannelConfig(ADC1,ADC_Channel_0,1,ADC_SampleTime_71Cycles5);	//左摇杆通道配置
 	ADC_RegularChannelConfig(ADC1,ADC_Channel_1,2,ADC_SampleTime_71Cycles5);
-	
-	ADC_RegularChannelConfig(ADC1,ADC_Channel_2,3,ADC_SampleTime_239Cycles5);	//采集电压
-	
-	ADC_RegularChannelConfig(ADC1,ADC_Channel_3,4,ADC_SampleTime_71Cycles5);	//按键电压采集
-		
-	ADC_RegularChannelConfig(ADC1,ADC_Channel_8,5,ADC_SampleTime_71Cycles5);	//右遥感通道配置
-	ADC_RegularChannelConfig(ADC1,ADC_Channel_9,6,ADC_SampleTime_71Cycles5);
+
+	ADC_RegularChannelConfig(ADC1,ADC_Channel_2,3,ADC_SampleTime_71Cycles5);	//右摇杆通道配置
+	ADC_RegularChannelConfig(ADC1,ADC_Channel_3,4,ADC_SampleTime_71Cycles5);
+
+	ADC_RegularChannelConfig(ADC1,ADC_Channel_9,5,ADC_SampleTime_239Cycles5);	//电池电压采集
 	
 	ADC_ResetCalibration(ADC1);	                                                //复位校准				
 	while(ADC_GetCalibrationStatus(ADC1));		                                //等待
@@ -87,7 +78,7 @@ static void AdcDmaConfig(void)
 
 	RCC_AHBPeriphClockCmd(RCC_AHBPeriph_DMA1,ENABLE);
 	
-	DMA_initStructure.DMA_BufferSize = 6;										
+	DMA_initStructure.DMA_BufferSize = 5;
 	DMA_initStructure.DMA_DIR = DMA_DIR_PeripheralSRC;	                        //传输方向：外设->内存						
 	DMA_initStructure.DMA_M2M = DMA_M2M_Disable;								
 	DMA_initStructure.DMA_MemoryBaseAddr = (u32)dmaAdcAddr;				        

@@ -13,7 +13,7 @@
 #include "task_manage.h"
 #include <string.h>
 
-static S_Remote remote = {0};		//Ò£¿ØÊý¾Ý
+static S_Remote remote = {0};		//Ò£ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 static rt_mutex_t remote_mutex = RT_NULL;
 
 void RockerValueTransform(void);
@@ -27,7 +27,7 @@ void RemoteHandle(void)
 
 void RemoteInit(void)
 {
-	/* ´´½¨»¥³âËø */
+	/* ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ */
 	remote_mutex = rt_mutex_create("remote_mutex", RT_IPC_FLAG_PRIO);
 	if (remote_mutex == RT_NULL)
 	{
@@ -37,7 +37,7 @@ void RemoteInit(void)
 
 }
 
-//Ò£¸ËÖµÁ¿»¯
+//Ò£ï¿½ï¿½Öµï¿½ï¿½ï¿½ï¿½
 void RockerValueTransform(void)
 {
 	const uint16_t *pAdcValue = NULL;
@@ -48,8 +48,8 @@ void RockerValueTransform(void)
 	GetCalibrateInfo(&remoteCalibrate);
 	
 #if FOUR_AXIS_UAV
-		//ÓÍÃÅ²É¼¯µÄÊý¾ÝÁ¿»¯Îª 0 ~ 1000
-		//¶æÃæ²É¼¯µÄÊý¾ÝÁ¿»¯Îª 0 ~ 100£¬0.02442 = 100 / 4096 * ²ÉÑùÖµ
+		//ï¿½ï¿½ï¿½Å²É¼ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Îª 0 ~ 1000
+		//ï¿½ï¿½ï¿½ï¿½É¼ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Îª 0 ~ 100ï¿½ï¿½0.02442 = 100 / 4096 * ï¿½ï¿½ï¿½ï¿½Öµ
 
 	if(remoteCalibrate.calFlag == CAL_FLAG_DONE && remoteCalibrate.calState != CAL_START){
 		
@@ -72,7 +72,7 @@ void RockerValueTransform(void)
 		}
 		remote.yaw = (uint8_t)ValueLimit((uint16_t)remote.yaw, 0, 99);
 
-		remote.pit = (uint8_t)((float)pAdcValue[5] * 0.02442f);
+		remote.pit = (uint8_t)((float)pAdcValue[3] * 0.02442f);
 		if(remote.pit >= 50){
 			remote.pit = (uint8_t)((float)(remote.pit - remoteCalibrate.pitchMiddle) * remoteCalibrate.pitch + 50.0f);
 		} else {
@@ -80,7 +80,7 @@ void RockerValueTransform(void)
 		}
 		remote.pit = (uint8_t)ValueLimit((uint16_t)remote.pit, 0, 99);
 
-		remote.roll = (uint8_t)((float)pAdcValue[4] * 0.02442f);
+		remote.roll = (uint8_t)((float)pAdcValue[2] * 0.02442f);
 		if(remote.roll >= 50){
 			remote.roll = (uint8_t)((float)(remote.roll - remoteCalibrate.rollMiddle) * remoteCalibrate.roll + 50.0f);
 		} else {
@@ -93,8 +93,8 @@ void RockerValueTransform(void)
 	} else {
 		remote.throttle = (uint16_t)MyAbs((pAdcValue[0]) * 0.24420f - 1000);
 		remote.yaw = (uint8_t)(pAdcValue[1] * 0.02442f);
-		remote.pit = (uint8_t)(pAdcValue[5] * 0.02442f);
-		remote.roll = (uint8_t)(pAdcValue[4] * 0.02442f);
+		remote.pit = (uint8_t)(pAdcValue[3] * 0.02442f);
+		remote.roll = (uint8_t)(pAdcValue[2] * 0.02442f);
 	}
 	
 	GetSwitchValue(&switchValue);
@@ -114,8 +114,8 @@ void RockerValueTransform(void)
     remote.pit = (uint8_t)(((float)(adcData[3]))*0.02442f);
     remote.roll = (uint8_t)(((float)(adcData[2]))*0.02442f);
 #elif BRUSHLESS_FOUR_AXIS_UAV
-		//ÓÍÃÅ²É¼¯µÄÊý¾ÝÁ¿»¯Îª 4000 ~ 8000
-		//¶æÃæ²É¼¯µÄÊý¾ÝÁ¿»¯Îª 0 ~ 400
+		//ï¿½ï¿½ï¿½Å²É¼ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Îª 4000 ~ 8000
+		//ï¿½ï¿½ï¿½ï¿½É¼ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Îª 0 ~ 400
     remote.throttle = (uint16_t)(((float)(adcData[1]))*0.9765625f + 4000);//4000~8000
     remote.yaw = (uint16_t)(((float)(adcData[0]))*0.09765625f);
     remote.pit = (uint16_t)(((float)(adcData[3]))*0.09765625f);
@@ -123,10 +123,10 @@ void RockerValueTransform(void)
 #endif
 }
 
-//Ò£¿ØÊý¾Ý·¢ËÍ
+//Ò£ï¿½ï¿½ï¿½ï¿½ï¿½Ý·ï¿½ï¿½ï¿½
 void RemotePacket(void)
 {
-	uint8_t txPacket[27] = {0};		//Êý¾Ý»¹Òª·â°ü£¬»áÕ¼ÓÃ5×Ö½Ú
+	uint8_t txPacket[27] = {0};		//ï¿½ï¿½ï¿½Ý»ï¿½Òªï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Õ¼ï¿½ï¿½5ï¿½Ö½ï¿½
 	uint8_t len = 0;
 	S_Pair pair;
 	
@@ -134,15 +134,15 @@ void RemotePacket(void)
 
 	if(pair.status == PAIR_DONE){
 		txPacket[len++] = CMD_ROCKER_DATA;
-		txPacket[len++] = *((uint8_t*)&remote.throttle);		//ÓÍÃÅµÍ°ËÎ»
-		txPacket[len++] = *(((uint8_t*)&remote.throttle)+1);		//ÓÍÃÅ¸ß°ËÎ»
-		txPacket[len++] = remote.pit;		//¸©Ñö¶æÏò
-		txPacket[len++] = remote.roll;		//ºá¹ö¶æÏò
-		txPacket[len++] = remote.yaw;		//Æ«º½¶æÏò
-		txPacket[len++] = remote.flyMode;		//·ÉÐÐÄ£Ê½
-		txPacket[len++] = remote.emergencyLock;		//½ô¼±Ëø½°
+		txPacket[len++] = *((uint8_t*)&remote.throttle);		//ï¿½ï¿½ï¿½ÅµÍ°ï¿½Î»
+		txPacket[len++] = *(((uint8_t*)&remote.throttle)+1);		//ï¿½ï¿½ï¿½Å¸ß°ï¿½Î»
+		txPacket[len++] = remote.pit;		//ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+		txPacket[len++] = remote.roll;		//ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+		txPacket[len++] = remote.yaw;		//Æ«ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+		txPacket[len++] = remote.flyMode;		//ï¿½ï¿½ï¿½ï¿½Ä£Ê½
+		txPacket[len++] = remote.emergencyLock;		//ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 		
-		StoreToTransmitQueue(txPacket, len);		//´æÈë·¢ËÍ¶ÓÁÐ
+		StoreToTransmitQueue(txPacket, len);		//ï¿½ï¿½ï¿½ë·¢ï¿½Í¶ï¿½ï¿½ï¿½
 	}
 
 }

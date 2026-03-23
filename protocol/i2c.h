@@ -8,8 +8,8 @@
 #define  SCL_PORT   GPIOB
 #define  SDA_PORT   GPIOB
 
-#define  SCL_PIN    GPIO_Pin_7
-#define  SDA_PIN    GPIO_Pin_6
+#define  SCL_PIN    GPIO_Pin_13
+#define  SDA_PIN    GPIO_Pin_14
 
 #define SCL_HIGH          SCL_PORT->BSRR = SCL_PIN
 #define SCL_LOW           SCL_PORT->BRR  = SCL_PIN

@@ -135,19 +135,20 @@
 #define REPEAT_CNT          15		//重复次数
 #define INIT_ADDR           0x34,0x43,0x10,0x10,0x01
 
-//NRF24L01控制操作
-#define SI24R1_CE_PIN       GPIO_Pin_11
+//NRF24L01控制操作 CE → PB10
+#define SI24R1_CE_PIN       GPIO_Pin_10
 #define SI24R1_CE_PORT			GPIOB
 #define SI24R1_CE_RCC_PORT   RCC_APB2Periph_GPIOB
 
-//NRF24L01 SPI接口CS信号
-#define SI24R1_CSN_PIN			GPIO_Pin_10
-#define SI24R1_CSN_PORT			GPIOB
+//NRF24L01 SPI接口CS信号 CSN → PA4
+#define SI24R1_CSN_PIN			GPIO_Pin_4
+#define SI24R1_CSN_PORT			GPIOA
 #define SI24R1_CSN_RCC_PORT		RCC_APB2Periph_GPIOA
 
-#define SI24R1_IRQ_PIN      GPIO_Pin_4	
-#define SI24R1_IRQ_PORT  		GPIOA
-#define SI24R1_IRQ_RCC_PORT   RCC_APB2Periph_GPIOA
+// IRQ → PB0
+#define SI24R1_IRQ_PIN      GPIO_Pin_0
+#define SI24R1_IRQ_PORT  		GPIOB
+#define SI24R1_IRQ_RCC_PORT   RCC_APB2Periph_GPIOB
 
 //NRF2401片选信号
 #define RF24L01_SET_CE_LOW()      GPIO_ResetBits(SI24R1_CE_PORT, SI24R1_CE_PIN)

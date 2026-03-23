@@ -11,7 +11,7 @@ void VoltageDetect(void)
 	static float lastVoltage = 0;
 	
 	pAdcValue = GetAdcValue();
-	powerVoltage = 2.0f*(pAdcValue[2]*3.3f/4096.0f);		//计算电压
+	powerVoltage = 2.0f*(pAdcValue[4]*3.3f/4096.0f);		//计算电压
 	
 	powerVoltage = RangeFilterFloat(powerVoltage, &lastVoltage, 0.03f);
 }
