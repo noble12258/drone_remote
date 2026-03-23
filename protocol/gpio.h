@@ -1,0 +1,21 @@
+#ifndef _GPIO_H_
+#define _GPIO_H_
+
+#include "stm32f10x.h"
+
+#define VCC_DETECT_IN_RCC_PORT		RCC_APB2Periph_GPIOB
+#define VCC_DETECT_IN_PIN				GPIO_Pin_14
+#define VCC_DETECT_IN_PORT				GPIOB
+
+#define GET_VCC_DETECT_IN_STATUS()    GPIO_ReadInputDataBit(VCC_DETECT_IN_PORT, VCC_DETECT_IN_PIN)
+
+#define VCC_DETECT_OUT_RCC_PORT		RCC_APB2Periph_GPIOB
+#define VCC_DETECT_OUT_PIN				GPIO_Pin_13
+#define VCC_DETECT_OUT_PORT				GPIOB
+
+#define	VCC_DETECT_OUT_HIGH		VCC_DETECT_OUT_PORT->BSRR = VCC_DETECT_OUT_PIN;
+#define	VCC_DETECT_OUT_LOW		VCC_DETECT_OUT_PORT->BRR = VCC_DETECT_OUT_PIN;
+
+void PowerControlGpioInit(void);
+
+#endif

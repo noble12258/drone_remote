@@ -1,0 +1,23 @@
+# 不忽略以下目录
+/*
+!/cmsis/
+!/driver/
+!/stm32_lib/
+!/module/
+!/protocol/
+!/system/
+!/u8g2/
+!/rtthread/
+!/my_lib/
+
+# 不忽略USER目录下的.c，.h文件
+!/user/
+/user/*
+!/user/*.c
+!/user/*.h
+!/user/*.uvguix.*
+!/user/*.uvoptx
+!/user/*.uvprojx
+!/user/*.s
+
+!.gitignore
