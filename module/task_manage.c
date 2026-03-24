@@ -16,22 +16,20 @@ void master_task_thread_entry(void *param)
 {
 	while(1){
 		TransmitHandle();
-		
+
 		ReceiveHandle();
-		
-		LedHandle();		
-		
+
 		rt_thread_mdelay(5);
 	}
 }
 
-//·É¿ØÖ÷ÈÎÎñ
+//ï¿½É¿ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 void MasterTask(void)
 {	
-	//´´½¨Ïß³Ì
+	//ï¿½ï¿½ï¿½ï¿½ï¿½ß³ï¿½
 	master_task_thread = rt_thread_create("master_task_thread", master_task_thread_entry, RT_NULL, 2048, MASTER_TASK_PRIORITY, 5);
 	
-	//Æô¶¯Ïß³Ì
+	//ï¿½ï¿½ï¿½ï¿½ï¿½ß³ï¿½
 	if (master_task_thread != RT_NULL){
 		rt_thread_startup(master_task_thread);
 	} else {
@@ -42,21 +40,22 @@ void MasterTask(void)
 void second_task_thread_entry(void *param)
 {
 	while(1){
+		LedHandle();
 		RemoteHandle();
 		KeyHandle();
 		RemoteCalibrateHandle();
-		
+
 		rt_thread_mdelay(10);
 	}
 }
 
-//´ÎÒªÈÎÎñ
+//ï¿½ï¿½Òªï¿½ï¿½ï¿½ï¿½
 void SecondTask(void)
 {	
-	//´´½¨Ïß³Ì
+	//ï¿½ï¿½ï¿½ï¿½ï¿½ß³ï¿½
 	second_task_thread = rt_thread_create("second_task_thread", second_task_thread_entry, RT_NULL, 2048, SECOND_TASK_PRIORITY, 5);
 	
-	//Æô¶¯Ïß³Ì
+	//ï¿½ï¿½ï¿½ï¿½ï¿½ß³ï¿½
 	if (second_task_thread != RT_NULL){
 		rt_thread_startup(second_task_thread);
 	} else {

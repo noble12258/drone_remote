@@ -22,13 +22,13 @@ void LedHandle(void)
 		TopLedColorSet(RED);
 	}
 	else if(pair.status == PAIR_START){
-		TopLedBlink(CYAN, 5, 5);
+		TopLedBlink(CYAN, 5, 10);
 	}
 	else if(pair.status == PAIR_FAIL){
 		TopLedColorSet(YELLOW);
 	}
 	else if(signalStatus == SIGNAL_LOST){
-		TopLedBlink(YELLOW, 2, 5);
+		TopLedBlink(YELLOW, 2, 10);
 	}
 	else if(plane.lock == UNLOCK){
 		TopLedColorSet(GREEN);
