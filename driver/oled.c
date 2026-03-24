@@ -54,7 +54,7 @@ void OLED_Init(void)
 	OLED_WR_Byte(0x40,OLED_CMD);//--set start line address  
 	OLED_WR_Byte(0xB0,OLED_CMD);//--set page address176
 	OLED_WR_Byte(0x81,OLED_CMD); // contract control
-	OLED_WR_Byte(0x08,OLED_CMD);//--128   
+	OLED_WR_Byte(0xCF,OLED_CMD);//--对比度值，0xCF较亮
 	OLED_WR_Byte(0xA1,OLED_CMD);//set segment remap 
 	OLED_WR_Byte(0xA6,OLED_CMD);//--normal / reverse
 	OLED_WR_Byte(0xA8,OLED_CMD);//--set multiplex ratio(1 to 64)
@@ -67,9 +67,6 @@ void OLED_Init(void)
 	OLED_WR_Byte(0x80,OLED_CMD);//
 	
 	
-	OLED_WR_Byte(0xD8,OLED_CMD);//set area color mode off
-	OLED_WR_Byte(0x05,OLED_CMD);//
-	
 	OLED_WR_Byte(0xD9,OLED_CMD);//Set Pre-Charge Period
 	OLED_WR_Byte(0xF1,OLED_CMD);//
 	
@@ -79,9 +76,10 @@ void OLED_Init(void)
 	OLED_WR_Byte(0xDB,OLED_CMD);//set Vcomh
 	OLED_WR_Byte(0x30,OLED_CMD);//
 	
+	OLED_WR_Byte(0xA4,OLED_CMD);//显示跟随RAM内容
 	OLED_WR_Byte(0x8D,OLED_CMD);//set charge pump enable
 	OLED_WR_Byte(0x14,OLED_CMD);//
-	
+
 	OLED_WR_Byte(0xAF,OLED_CMD);//--turn on oled panel
 #endif
 

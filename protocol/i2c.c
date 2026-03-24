@@ -9,14 +9,14 @@ void I2cInit(void)
     RCC_APB2PeriphClockCmd(IIC_RCC_PORT, ENABLE);
     
     GPIO_InitStructure.GPIO_Pin    = SCL_PIN;
-    GPIO_InitStructure.GPIO_Mode   = GPIO_Mode_Out_PP;                 //推挽输出    
+    GPIO_InitStructure.GPIO_Mode   = GPIO_Mode_Out_OD;                 //开漏输出（I2C标准）
     GPIO_InitStructure.GPIO_Speed  = GPIO_Speed_50MHz;
     GPIO_Init(SCL_PORT, &GPIO_InitStructure);
 
     GPIO_InitStructure.GPIO_Pin    = SDA_PIN;
-    GPIO_InitStructure.GPIO_Mode   = GPIO_Mode_Out_PP;                 //推挽输出    
+    GPIO_InitStructure.GPIO_Mode   = GPIO_Mode_Out_OD;                 //开漏输出（I2C标准）
     GPIO_InitStructure.GPIO_Speed  = GPIO_Speed_50MHz;
-    GPIO_Init(SCL_PORT, &GPIO_InitStructure);
+    GPIO_Init(SDA_PORT, &GPIO_InitStructure);
     
 //    delay_ms(10);
     GPIO_SetBits(SCL_PORT,SCL_PIN);                                    //上拉
@@ -28,10 +28,10 @@ void SDA_OUT(void)
 {
 	GPIO_InitTypeDef  GPIO_InitStructure;
     
-	GPIO_InitStructure.GPIO_Pin   = SDA_PIN ;
-  GPIO_InitStructure.GPIO_Mode   = GPIO_Mode_Out_PP;                 //输出
-  GPIO_InitStructure.GPIO_Speed = GPIO_Speed_50MHz;
-	GPIO_Init(SCL_PORT, &GPIO_InitStructure);
+	GPIO_InitStructure.GPIO_Pin   = SDA_PIN;
+	GPIO_InitStructure.GPIO_Mode  = GPIO_Mode_Out_OD;                 //开漏输出（I2C标准）
+	GPIO_InitStructure.GPIO_Speed = GPIO_Speed_50MHz;
+	GPIO_Init(SDA_PORT, &GPIO_InitStructure);
 	
 }
 //数据端口配置为输入模式   
