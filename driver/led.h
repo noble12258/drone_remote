@@ -7,13 +7,13 @@
 #define LED_RGB_RCC        RCC_APB2Periph_GPIOB
 
 #define LED_RED_PORT       GPIOB
-#define LED_RED_PIN        GPIO_Pin_7
+#define LED_RED_PIN        GPIO_Pin_9
 
 #define LED_GREEN_PORT     GPIOB
 #define LED_GREEN_PIN      GPIO_Pin_8
 
 #define LED_BLUE_PORT      GPIOB
-#define LED_BLUE_PIN       GPIO_Pin_9
+#define LED_BLUE_PIN       GPIO_Pin_7
 
 typedef enum{
 	RED = 1,
