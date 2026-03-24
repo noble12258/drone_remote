@@ -4,8 +4,8 @@
 #include "led.h"
 
 //屏幕类型选择
-//#define SSD1306_OLED		1
-#define SH1106_OLED		1
+#define SSD1306_OLED		1
+//#define SH1106_OLED		1
 
 /*******************************************************************************
 * 函 数 名         : OLED_Init()
