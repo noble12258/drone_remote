@@ -37,11 +37,15 @@ void KeyHandle(void)
 
 void KeyAnalysis(void)
 {
-	S_KeyScan cancelKey = {0, 1, KEY_2_PORT, KEY_2_PIN};
+	memset((void *)&keyValue, 0, sizeof(keyValue));
 
-	keyValue.cancel = KeyScan(&cancelKey, 0);
-	if(keyValue.cancel == 1){
-		LogDma("key cancel");
+	/* OLED四键映射：左上KEY1=上，左下KEY2=下，右上KEY4=确定，右下KEY3=返回 */
+	keyValue.up = KeyScan(&switch1, 0);
+	keyValue.down = KeyScan(&switch2, 0);
+	keyValue.cancel = KeyScan(&switch3, 0);
+	keyValue.ok = KeyScan(&switch4, 0);
+
+	if(keyValue.up == 1 || keyValue.down == 1 || keyValue.ok == 1 || keyValue.cancel == 1){
 		memcpy((void *)&tempKeyValue, (void *)&keyValue, sizeof(keyValue));
 	}
 

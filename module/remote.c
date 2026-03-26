@@ -55,16 +55,15 @@ void RockerValueTransform(void)
 		
 		rt_mutex_take(remote_mutex, RT_WAITING_FOREVER);
 		
-		remote.throttle = (uint16_t)((float)pAdcValue[0] * 0.24420f);
-		remote.throttle = MyAbs(remote.throttle - 1000);
+		remote.throttle = (uint16_t)((float)pAdcValue[1] * 0.24420f);
 		if(remote.throttle >= 500){
 			remote.throttle = (uint16_t)((float)(remote.throttle - remoteCalibrate.throttleMiddle) * remoteCalibrate.throttle + 500.0f);
 		} else {
 			remote.throttle = (uint16_t)((float)(remote.throttle - remoteCalibrate.throttleMin) * remoteCalibrate.throttle2);
 		}
 		remote.throttle = ValueLimit(remote.throttle, 0, 999);
-		
-		remote.yaw = (uint8_t)((float)pAdcValue[1] * 0.02442f);
+
+		remote.yaw = (uint8_t)((float)pAdcValue[0] * 0.02442f);
 		if(remote.yaw >= 50){
 			remote.yaw = (uint8_t)((float)(remote.yaw - remoteCalibrate.yawMiddle) * remoteCalibrate.yaw + 50.0f);
 		} else {
@@ -72,7 +71,7 @@ void RockerValueTransform(void)
 		}
 		remote.yaw = (uint8_t)ValueLimit((uint16_t)remote.yaw, 0, 99);
 
-		remote.pit = (uint8_t)((float)pAdcValue[3] * 0.02442f);
+		remote.pit = 99 - (uint8_t)((float)pAdcValue[3] * 0.02442f);
 		if(remote.pit >= 50){
 			remote.pit = (uint8_t)((float)(remote.pit - remoteCalibrate.pitchMiddle) * remoteCalibrate.pitch + 50.0f);
 		} else {
@@ -91,9 +90,9 @@ void RockerValueTransform(void)
 		rt_mutex_release(remote_mutex);
 		
 	} else {
-		remote.throttle = (uint16_t)MyAbs((pAdcValue[0]) * 0.24420f - 1000);
-		remote.yaw = (uint8_t)(pAdcValue[1] * 0.02442f);
-		remote.pit = (uint8_t)(pAdcValue[3] * 0.02442f);
+		remote.throttle = (uint16_t)(pAdcValue[1] * 0.24420f);
+		remote.yaw = (uint8_t)(pAdcValue[0] * 0.02442f);
+		remote.pit = 99 - (uint8_t)(pAdcValue[3] * 0.02442f);
 		remote.roll = (uint8_t)(pAdcValue[2] * 0.02442f);
 	}
 	

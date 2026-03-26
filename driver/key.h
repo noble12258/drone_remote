@@ -4,7 +4,7 @@
 #include "stm32f10x.h"
 #include <stdbool.h>
 
-#define SWITCH_RCC_SUM	SWITCH_1_RCC | SWITCH_2_RCC | SWITCH_3_RCC | SWITCH_4_RCC | SWITCH_5_RCC | SWITCH_6_RCC | KEY_2_RCC
+#define SWITCH_RCC_SUM	SWITCH_1_RCC | SWITCH_2_RCC | SWITCH_3_RCC | SWITCH_4_RCC | SWITCH_5_RCC | SWITCH_6_RCC
 
 #define SWITCH_1_RCC		RCC_APB2Periph_GPIOC
 #define SWITCH_1_PORT		GPIOC
@@ -29,10 +29,6 @@
 #define SWITCH_6_RCC		RCC_APB2Periph_GPIOB
 #define SWITCH_6_PORT		GPIOB
 #define SWITCH_6_PIN		GPIO_Pin_5
-
-#define KEY_2_RCC     RCC_APB2Periph_GPIOB
-#define KEY_2_PORT		GPIOB
-#define KEY_2_PIN     GPIO_Pin_12
 
 typedef struct{
 	uint8_t keyPushFlag;		//用于记录按键按下标志位，初始化为0即可
